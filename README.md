@@ -1,5 +1,5 @@
 # Tailcall on AWS
-This repo lets you deploy a Tailcall instance with your own config on AWS (Lambda and API Gateway). The deployment is automatically built and managed by Terraform, but you can customize it by editing `tailcall.tf`.
+This repo lets you deploy a Tailcall instance with your own config on AWS (Lambda and API Gateway). The deployment is automatically built and managed by Terraform, and it will use the config in `config.graphql`.
 
 ## First setup
 1. [Install Terraform.](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
