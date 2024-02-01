@@ -4,8 +4,8 @@ This repo lets you deploy a Tailcall instance with your own config on AWS (Lambd
 ## First setup
 1. [Install Terraform.](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 1. Create an access key on AWS, and set your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables.
-1. Fork this repo and clone it.
-1. Run `terraform init` and `terraform apply`.
+1. Open this repo on GitHub, click on "Use this template" to create a new repository with it, and clone it to your machine.
+1. In the repo's directory, run `terraform init` and `terraform apply`.
 1. Done! The API Gateway URL of your Tailcall deployment should be logged to the console. 🎉
 
 ## Changing your deployment
