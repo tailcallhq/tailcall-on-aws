@@ -9,7 +9,11 @@ This repo lets you deploy a Tailcall instance with your own config on AWS (Lambd
 1. Done! The API Gateway URL of your Tailcall deployment should be logged to the console. 🎉
 
 ## Changing your deployment
-If you change `config/config.graphql`, you can update your deployment with the new config by running `terraform apply` again. This will also auto-update Tailcall if a new version has been released since the last time you've applied the Terraform config.s
+If you change `config/config.graphql`, you can update your deployment with the new config by running `terraform apply` again. This will also auto-update Tailcall if a new version has been released since the last time you've applied the Terraform config.
+
+## Configuring your deployment
+You can configure certain functionality of your deployment by creating the `config/.env` file. The following environment variables are checked:
+- `LOG_LEVEL`: Sets minimum log level that will be uploaded to AWS CloudWatch. Available values: `TRACE` (default, will log everything), `DEBUG`, `INFO`, `WARN`, `ERROR`.
 
 ## Teardown
 If you want to delete your deployment, run `terraform destroy`. This will delete your Lambda function and API Gateway from AWS.

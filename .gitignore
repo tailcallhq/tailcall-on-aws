@@ -36,3 +36,4 @@ terraform.rc
 # Tailcall-specific ignores
 /tailcall.zip
 /config/bootstrap
+/config/.env
