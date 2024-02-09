@@ -26,8 +26,8 @@ data "aws_iam_policy_document" "assume_role" {
     }
 }
 
-resource "aws_iam_role" "iam_for_lambda" {
-    name               = "iam_for_lambda"
+resource "aws_iam_role" "iam_for_tailcall" {
+    name               = "iam_for_tailcall"
     assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -69,7 +69,7 @@ resource "aws_lambda_function" "tailcall" {
         data.archive_file.tailcall
     ]
 
-    role = aws_iam_role.iam_for_lambda.arn
+    role = aws_iam_role.iam_for_tailcall.arn
     function_name    = "tailcall"
     runtime          = "provided.al2"
     architectures    = ["x86_64"]
