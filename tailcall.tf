@@ -40,17 +40,17 @@ data "github_release" "tailcall" {
 }
 
 data "http" "bootstrap" {
-    url = data.github_release.tailcall.assets[index(data.github_release.tailcall.assets.*.name, "tailcall-aws-lambda-bootstrap")].url
+    url = data.github_release.tailcall.assets[index(data.github_release.tailcall.assets.*.name, "tailcall-aws-lambda-bootstrap")].browser_download_url
 }
 
 resource "local_sensitive_file" "bootstrap" {
     content_base64 = data.http.bootstrap.response_body_base64
-    filename       = "tmp/bootstrap"
+    filename       = "config/bootstrap"
 }
 
 resource "local_sensitive_file" "config" {
-    content_base64 = filebase64("config.graphql")
-    filename = "tmp/config.graphql"
+    content_base64 = filebase64("config/config.graphql")
+    filename = "config/config.graphql"
 }
 
 data "archive_file" "tailcall" {
@@ -60,7 +60,7 @@ data "archive_file" "tailcall" {
         local_sensitive_file.config
     ]
     type        = "zip"
-    source_dir  = "tmp/"
+    source_dir  = "config/"
     output_path = "tailcall.zip"
 }
 
