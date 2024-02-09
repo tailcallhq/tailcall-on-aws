@@ -93,6 +93,7 @@ resource "aws_api_gateway_method" "proxy" {
     resource_id   = "${aws_api_gateway_resource.proxy.id}"
     http_method   = "ANY"
     authorization = "NONE"
+    api_key_required = false
 }
 
 resource "aws_api_gateway_integration" "lambda" {
@@ -110,6 +111,7 @@ resource "aws_api_gateway_method" "proxy_root" {
     resource_id   = "${aws_api_gateway_rest_api.tailcall.root_resource_id}"
     http_method   = "ANY"
     authorization = "NONE"
+    api_key_required = false
 }
 
 resource "aws_api_gateway_integration" "lambda_root" {
@@ -131,6 +133,20 @@ resource "aws_api_gateway_deployment" "tailcall" {
     rest_api_id = "${aws_api_gateway_rest_api.tailcall.id}"
 }
 
+resource "aws_api_gateway_stage" "live" {
+  deployment_id = aws_api_gateway_deployment.tailcall.id
+  rest_api_id   = aws_api_gateway_rest_api.tailcall.id
+  stage_name    = "live"
+}
+
+resource "aws_api_gateway_method_settings" "live" {
+  rest_api_id = aws_api_gateway_rest_api.tailcall.id
+  stage_name  = aws_api_gateway_stage.live.stage_name
+  method_path = "*/*"
+
+  settings {}
+}
+
 resource "aws_lambda_permission" "apigw" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
@@ -142,6 +158,6 @@ resource "aws_lambda_permission" "apigw" {
     source_arn = "${aws_api_gateway_rest_api.tailcall.execution_arn}/*/*"
 }
 
-output "base_url" {
-    value = "${aws_api_gateway_deployment.tailcall.invoke_url}"
+output "graphql_url" {
+    value = "${aws_api_gateway_stage.live.invoke_url}/graphql"
 }
